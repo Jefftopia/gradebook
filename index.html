@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/png" href="myicon.png">
+    <title>GradeBook</title>
+    <meta name="description" content="Welcome to Gradebook.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--<link rel="stylesheet" href="css/build/style.css"> -->
+	<link rel="stylesheet" href="css/foundation.min.css">
+	<script type="text/javascript" charset="utf-8" src="js/lib/modernizr.js"></script>
+  <script type="text/javascript" charset="utf-8" src="js/lib/jquery.js"></script>
+	<script type="text/javascript" charset="wtf-8" src="js/lib/foundation.min.js"></script>
+</head>
+<body id="gradebook-app">
+
+<h2>Your Classroom Gradebook</h2>
+  
+<div>
+<button data-bind="click: addWork">Add New Assignment</button>
+  <button data-bind="click: dropLowestScores">Get Lowest</button>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <!-- ko foreach: assignments -->
+            <th><p>      
+              <b data-bind="visible: !editing(), text: workName(), click: edit">&nbsp;</b>
+              <input data-bind="value: workName, visible: editing, hasFocus: editing"/>
+            <select data-bind="options: $root.workTypes, value: workType, optionsText: 'workType'"></select>
+              </p></th> 
+            <!-- /ko -->
+            <th>Student Grade</th>
+        </tr>    
+    </thead>
+    <tbody>
+      <!-- ko foreach: students -->
+        <tr>
+            <td>
+              <b data-bind="text: $index()+1"></b>
+              <span data-bind="visible: !editing(), text: fullName(), click: edit">&nbsp;</span>
+              <input data-bind="value: fullName, visible: editing, hasFocus: editing"/>
+            </td>  
+            <!-- ko foreach: scores -->  
+            <td><input data-bind="value: $rawData"/></td>
+            <!-- /ko --> 
+            <td data-bind="text: mean($data)" />
+            <td><input type="button" value="remove" data-bind="click: $root.removeStudent.bind($root)". /></td>
+        </tr> 
+      <!-- /ko -->
+        <tr>
+          <td><b>Class Assignment Average</b></td> 
+          <!-- ko foreach: assignments -->
+          <td data-bind="text: $root.workMean($data, $index())"></td>
+          <!-- /ko -->
+          <td></td>
+        </tr>  
+  </tbody>    
+</table>
+<button data-bind="click: addStudent">Add a Student</button>
+<div id="chart">
+  <svg>
+  </svg>
+</div>
+</div>
+
+<script type="text/javascript" charset="utf-8" src="js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/lib/knockout.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/main.js"></script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-39897695-2', 'google.com');
+    ga('send', 'pageview');
+
+</script>
+</body>
+</html>
