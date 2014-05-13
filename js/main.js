@@ -18,40 +18,24 @@ var Gradebook;
                 this.edit = function() { _this.editing(true); };            
                 this.scores = ko.observableArray();
                 this.lowest = ko.observableArray();
-                this.mean = (function(scores) {
-                    var m = 0;
-                    var count = 0;
-                    var k;
-
-                    ko.utils.arrayForEach(_this.scores(), function(score,k) {
-
-                        console.log([typeof score(), score()]);
-
-                        if (!isNaN(parseFloat(score()))) {
-                            k = _this.scores.indexOf(score);
-                            console.log('k: ' + k);
-                            console.log('_this.lowest[k]: ' + _this.lowest[k]);
-                           // console.log('_this.lowest()[k]: ' + _this.lowest()[k]);
-                           // console.log('_this.lowest()[k](): ' + _this.lowest()[k]());
-                           // console.log('_this.lowest[k](): ' + _this.lowest[k]());
-                           // console.log('_this.lowest()[k()]: ' + _this.lowest()[k()]);
-                            if (score() != _this.lowest[k]) {
-                                m += parseFloat(score());
-                                count += 1;
+                this.mean = ko.computed(function() {
+                        var sum  = 0;
+                        var count = 0;
+                        var n = 0;
+                        for(n;n < _this.scores().length;n++) {
+                            var score = _this.scores()[n];
+                            if (_this.lowest.indexOf(score)<0) {
+                                sum += parseFloat(score());
+                                count++;
                             }
-
                         }
-
-
-                    });
-
-
-                    if (count) {
-                        m = m / count;
-                        return m.toFixed(2);
-                    } else {
-                        return 'N/A';
-                    }
+                        
+                        if (count > 0) {
+                            sum = sum / count;
+                            return sum.toFixed(2);
+                        } else {
+                            return 'N/A';
+                        }
                 });
             }
             return StudentModel;
@@ -126,24 +110,24 @@ var Gradebook;
                     return 'N/A';
                   }
                 };
-              
-                this.dropLowestScores = function() {
+
+                this.comparator = function(a,b){
+                    if(a()<b()){
+                        return -1;
+                    } else if(a() > b()){
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }; 
+
+               this.dropLowestScores = function() {
                     ko.utils.arrayForEach(_this.students(), function(student){
-                        var comparator = function(a,b){
-                          if(a()<b()){
-                            return 1;
-                          } else if(a() > b()){
-                            return -1;
-                          } else {
-                            return 0;
-                          }
-                        };       
-                        var tmp = student.scores().slice(0);
-                        tmp.sort(comparator);
-                        student.lowest = tmp.splice((tmp.length-2),tmp.length-1);
+                        var tmp = student.scores().sort(_this.comparator).slice(0,1);
+                        student.lowest(tmp);
                     });
-                };
-              
+               };              
+
                 this.addStudent = function () {
                     this.students.push(new Gradebook.Model.StudentModel("Student "));
                     this.updateRows();

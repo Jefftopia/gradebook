@@ -21,7 +21,9 @@
   
 <div>
 <button data-bind="click: addWork">Add New Assignment</button>
-  <button data-bind="click: dropLowestScores">Get Lowest</button>
+<button data-bind="click: addStudent">Add a Student</button>
+<button data-bind="click: dropLowestScores">Drop Lowest Scores</button>
+
 <table>
     <thead>
         <tr>
@@ -47,7 +49,7 @@
             <!-- ko foreach: scores -->  
             <td><input data-bind="value: $rawData"/></td>
             <!-- /ko --> 
-            <td data-bind="text: mean($data)" />
+            <td data-bind="text: mean, uniqueName: console.log('mean ' + mean())" />
             <td><input type="button" value="remove" data-bind="click: $root.removeStudent.bind($root)". /></td>
         </tr> 
       <!-- /ko -->
@@ -60,7 +62,6 @@
         </tr>  
   </tbody>    
 </table>
-<button data-bind="click: addStudent">Add a Student</button>
 <div id="chart">
   <svg>
   </svg>
