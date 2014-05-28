@@ -24,6 +24,14 @@
 <button data-bind="click: addStudent">Add a Student</button>
 <button data-bind="click: dropLowestScores">Drop Lowest Scores</button>
 
+<p>Drop
+  <span>
+    <select data-bind="value: n, options: nums, optionsText: 'n'"></select>
+  </span>Lowest<span>
+    <select data-bind="value: workType, options: workTypes, optionsText: 'workType'"></select>
+  </span>Scores
+</p>
+
 <table>
     <thead>
         <tr>
@@ -32,7 +40,7 @@
             <th><p>      
               <b data-bind="visible: !editing(), text: workName(), click: edit">&nbsp;</b>
               <input data-bind="value: workName, visible: editing, hasFocus: editing"/>
-            <select data-bind="options: $root.workTypes, value: workType, optionsText: 'workType'"></select>
+              <select data-bind="options: $root.workTypes, value: workType, optionsText: 'workType'"></select>
               </p></th> 
             <!-- /ko -->
             <th>Student Grade</th>
@@ -50,7 +58,7 @@
             <td><input data-bind="value: $rawData"/></td>
             <!-- /ko --> 
             <td data-bind="text: mean, uniqueName: console.log('mean ' + mean())" />
-            <td><input type="button" value="remove" data-bind="click: $root.removeStudent.bind($root)". /></td>
+            <!--<td><input type="button" value="remove" data-bind="click: $root.removeStudent.bind($root)". /></td>-->
         </tr> 
       <!-- /ko -->
         <tr>

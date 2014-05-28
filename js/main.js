@@ -21,9 +21,9 @@ var Gradebook;
                 this.mean = ko.computed(function() {
                         var sum  = 0;
                         var count = 0;
-                        var n = 0;
-                        for(n;n < _this.scores().length;n++) {
-                            var score = _this.scores()[n];
+                        var m = 0;
+                        for(m;m < _this.scores().length;m++) {
+                            var score = _this.scores()[m];
                             if (_this.lowest.indexOf(score)<0) {
                                 sum += parseFloat(score());
                                 count++;
@@ -68,6 +68,15 @@ var Gradebook;
         var StudentsViewModel = (function () {
             function StudentsViewModel() {
                 var _this = this;
+
+                this.nums = [
+                    {n: 0},
+                    {n: 1},
+                    {n: 2},
+                    {n: 3},
+                    {n: 4},
+                    {n: 5}
+                ];
               
                 this.workTypes = [
                   {workType: 'Homework'},
@@ -76,7 +85,10 @@ var Gradebook;
                   {workType:  'Project'},
                   {workType:  'Other'}
                 ];
-              
+
+                this.workType = ko.observable(_this.workTypes[0]);
+                this.n = ko.observable(_this.nums[0]);
+
                 this.students = ko.observableArray([
                     new Gradebook.Model.StudentModel("Jeff Smith"),
                     new Gradebook.Model.StudentModel("Gandalf")
@@ -87,7 +99,7 @@ var Gradebook;
                     new Gradebook.Model.WorkModel("Reading",_this.workTypes[0])
                 ]);
               
-                this.workMean = function (work, i) {
+                this.workMean = function(work, i) {
                   var m = 0;
                   var count = 0;
                   ko.utils.arrayForEach(_this.students(), function(student){
@@ -119,14 +131,34 @@ var Gradebook;
                     } else {
                         return 0;
                     }
-                }; 
+                };               
 
-               this.dropLowestScores = function() {
-                    ko.utils.arrayForEach(_this.students(), function(student){
-                        var tmp = student.scores().sort(_this.comparator).slice(0,1);
-                        student.lowest(tmp);
-                    });
-               };              
+                this.dropLowestScores = ko.computed({
+                    
+                    read: function() {
+                        this.n = _this.n().n;
+                        this.workType = _this.workType().workType;
+                        console.log("workType:" + this.workType);
+                        return n,workType;   
+                    },
+
+                    write: function(n,workType) {
+                        //this.n = n;
+                        //this.workType = workType;
+                        ko.utils.arrayForEach(_this.students(), function(student){
+                            var i = _this.students.indexOf(student);
+
+                            console.log("_this.assignments: " + _this.assignments()[i].workType().workType);
+                            console.log("this.workType: " + this.workType);
+                            console.log(_this.assignments()[i].workType().workType == this.workType);
+                            if(_this.assignments()[i].workType().workType == this.workType){
+                                var tmp = student.scores().sort(_this.comparator).slice(0,this.n);
+                                console.log(tmp.length);
+                                student.lowest(tmp);
+                            }    
+                        });
+                    }
+                });              
 
                 this.addStudent = function () {
                     this.students.push(new Gradebook.Model.StudentModel("Student "));
