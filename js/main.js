@@ -138,24 +138,27 @@ var Gradebook;
                     read: function() {
                         this.n = _this.n().n;
                         this.workType = _this.workType().workType;
-                        console.log("workType:" + this.workType);
                         return n,workType;   
                     },
 
                     write: function(n,workType) {
-                        //this.n = n;
-                        //this.workType = workType;
                         ko.utils.arrayForEach(_this.students(), function(student){
-                            var i = _this.students.indexOf(student);
+                            var tmp = [];
 
-                            console.log("_this.assignments: " + _this.assignments()[i].workType().workType);
-                            console.log("this.workType: " + this.workType);
-                            console.log(_this.assignments()[i].workType().workType == this.workType);
-                            if(_this.assignments()[i].workType().workType == this.workType){
-                                var tmp = student.scores().sort(_this.comparator).slice(0,this.n);
-                                console.log(tmp.length);
-                                student.lowest(tmp);
-                            }    
+                            ko.utils.arrayForEach(student.scores(), function(score){
+
+                                var i = student.scores.indexOf(score);
+
+                                if(_this.assignments()[i].workType().workType == this.workType){
+                                    console.log(score());
+                                    tmp.push(score);
+                                }    
+                            });
+
+                            var tmp = tmp.sort(_this.comparator).slice(0,this.n);
+                            console.log(tmp.length);
+                            student.lowest(tmp);
+
                         });
                     }
                 });              
