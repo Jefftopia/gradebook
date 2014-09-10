@@ -3,14 +3,23 @@ module Gradebook {
 	export module Model {
 
 		export class WorkModel {
-			constructor(public workName: string) {
+            
+			constructor(public workName: string, public workType: string) {
+                
 				this.workName = ko.observable(workName);
+                
+                this.workType = ko.observable(workType);
+                
 			}
-
-	        workType = ko.observable(workType);
-	        editing = ko.observable(false);
-	        edit = () => { this.editing(!this.editing()); };            
-
+            
+                this.dropped = ko.observable(false);
+                                
+                this.editing = ko.observable(false);
+                
+                this.edit = function() { _this.editing(!_this.editing()); };            
+            
 		}
+        
 	}
+    
 }
