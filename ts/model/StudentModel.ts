@@ -4,37 +4,40 @@ module Gradebook {
 
 		export class StudentModel {
             
-			constructor(public fullName: string) {
-                
-				this.fullName = ko.observable(fullName);
-                
+            //fullName: KnockoutObservable<string>;
+            
+			constructor(public fullName: KnockoutObservable<string>) {
+
+                this.fullName = fullName;        
+        
 			}
 
-            var _this = this;
-                        
-            this.editing = ko.observable(false);
             
-            this.edit = function() { _this.editing(true); };
-                    
-            this.scores = ko.observableArray();
+            editing: KnockoutObservable<boolean> = ko.observable(false);
             
-            this.lowest = ko.observableArray();
+            edit = () => { this.editing(true); };
+                    
+            scores: KnockoutObservableArray<number> = ko.observableArray<number>();
             
-            this.mean = ko.computed(function() {
+            lowest: KnockoutObservableArray<number> = ko.observableArray<number>();
+            
+            mean = ko.computed( () => {
                     
-                    var sum  = 0;
+                    var sum: number = 0;
                     
-                    var count = 0;
+                    var count: number = 0;
                     
-                    var m = 0;
+                    var m: number = 0;
                 
-                    for(m;m < _this.scores().length;m++) {
+                    for(m;m < this.scores().length;m++) {
                         
-                        var score = _this.scores()[m];
+                        //var score: KnockoutObservableArrayStatic = this.scores()[m];
                         
-                        if (_this.lowest.indexOf(score)<0) {
+                        if (this.lowest.indexOf(this.scores()[m])<0) {
                             
-                            sum += parseFloat(score());
+                            // sum += parseFloat(score());
+                            
+                            sum += this.scores()[m];
                             
                             count++;
                             

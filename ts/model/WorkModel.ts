@@ -4,19 +4,19 @@ module Gradebook {
 
 		export class WorkModel {
             
-			constructor(public workName: string, public workType: string) {
+			constructor(public workName: KnockoutObservable<string>, public workType: KnockoutObservable<string>) {
                 
-				this.workName = ko.observable(workName);
+				this.workName = workName;
                 
-                this.workType = ko.observable(workType);
+                this.workType = workType;
                 
 			}
             
-                this.dropped = ko.observable(false);
+                dropped = ko.observable(false);
                                 
-                this.editing = ko.observable(false);
+                editing = ko.observable(false);
                 
-                this.edit = function() { _this.editing(!_this.editing()); };            
+                edit = () => { this.editing(!this.editing()); };            
             
 		}
         
