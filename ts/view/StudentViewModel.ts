@@ -50,7 +50,7 @@ module Gradebook {
             
             n: KnockoutObservable<any> = ko.observable(this.nums[0]);
             
-            students: KnockoutObservableArray<StudentModel> = ko.observableArray([
+            students: KnockoutObservableArray<Gradebook.Model.StudentModel> = ko.observableArray([
                 
                 new Gradebook.Model.StudentModel("Jeff Smith")
             
@@ -58,7 +58,7 @@ module Gradebook {
                     
             ]);
             
-            assignments: KnockoutObservableArray<WorkModel> = ko.observableArray([
+            assignments: KnockoutObservableArray<Gradebook.Model.WorkModel> = ko.observableArray([
             
                 new Gradebook.Model.WorkModel("Math", this.workTypes[1])
             
@@ -154,7 +154,7 @@ module Gradebook {
                                 }
                             });
                                     
-                            var tmp = tmp.sort(this.comparator).slice(0,this.n);
+                            var tmp = tmp.sort(this.comparator).slice(0,n);
                             
                             console.log(tmp.length);
                             
@@ -180,7 +180,9 @@ module Gradebook {
             
             addWork = () => {
             
-                var t = this.workTypes[2].workType;console.log('t:' + t);
+                var t: KnockoutObservable<string> = this.workTypes[2].workType;
+                
+                console.log('t:' + t);
                 
                 this.assignments.push(new Gradebook.Model.WorkModel("Assignment ", t));
                 

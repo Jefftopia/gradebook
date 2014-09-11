@@ -3,14 +3,17 @@ module Gradebook {
 	export module Model {
 
 		export class WorkModel {
-            
-			constructor(public workName: KnockoutObservable<string>, public workType: KnockoutObservable<string>) {
+                        
+			constructor(workName: string, workType: KnockoutObservable<string>) {
                 
-				this.workName = workName;
+				this.workName = ko.observable(workName);
                 
                 this.workType = workType;
                 
 			}
+                workName: KnockoutObservable<string>;
+                
+                workType: KnockoutObservable<string>;
             
                 dropped = ko.observable(false);
                                 

@@ -1,66 +1,68 @@
 module Gradebook {
 
-	export module Model {
+    export module Model {
 
-		export class StudentModel {
-            
-            //fullName: KnockoutObservable<string>;
-            
-			constructor(public fullName: KnockoutObservable<string>) {
+        export class StudentModel {
 
-                this.fullName = fullName;        
-        
-			}
 
-            
+            constructor(fullName: string) {
+
+                this.fullName = ko.observable(fullName);
+
+            }
+
+            fullName: KnockoutObservable<string>;
+
             editing: KnockoutObservable<boolean> = ko.observable(false);
-            
-            edit = () => { this.editing(true); };
-                    
+
+            edit(): void {
+
+                this.editing(true);
+
+            }
+
             scores: KnockoutObservableArray<number> = ko.observableArray<number>();
-            
+
             lowest: KnockoutObservableArray<number> = ko.observableArray<number>();
-            
-            mean = ko.computed( () => {
-                    
-                    var sum: number = 0;
-                    
-                    var count: number = 0;
-                    
-                    var m: number = 0;
-                
-                    for(m;m < this.scores().length;m++) {
-                        
-                        //var score: KnockoutObservableArrayStatic = this.scores()[m];
-                        
-                        if (this.lowest.indexOf(this.scores()[m])<0) {
-                            
-                            // sum += parseFloat(score());
-                            
-                            sum += this.scores()[m];
-                            
-                            count++;
-                            
-                        }
-                        
+
+            mean = ko.computed(() => {
+
+                var sum: number = 0;
+
+                var count: number = 0;
+
+                var m: number = 0;
+
+                for (m; m < this.scores().length; m++) {
+
+                    var score: number = this.scores()[m];
+
+                    if (this.lowest.indexOf(score) < 0) {
+
+                        sum += score;
+
+                        count++;
+
                     }
-                    
-                    if (count > 0) {
-                        
-                        sum = sum / count;
-                        
-                        return sum.toFixed(2);
-                        
-                    } else {
-                        
-                        return 'N/A';
-                        
-                    }
-                
+
+                }
+
+                if (count > 0) {
+
+                    sum = sum / count;
+
+                    return sum.toFixed(2);
+
+                } else {
+
+                    return 'N/A';
+
+                }
+
             });
-                        
+
         }
-        
-	}
-    
+
+    }
+
 }
