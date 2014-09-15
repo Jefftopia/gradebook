@@ -1,24 +1,6 @@
-module Gradebook {	
+module gradebook {	
     
     export module ViewModel {
-    
-   /*     
-        
-        interface IStudentViewModel {
-        
-            nums: Array<any>;
-            
-            workTypes: Array<any>;
-            
-            n: KnockoutObservable<number>;
-            
-            students: KnockoutObservableArray<any>;
-            
-            workMean(work: KnockoutObservable<string>, i: number): number;
-            
-        }
-        
-    */
         
         export class StudentsViewModel {            
             
@@ -50,19 +32,19 @@ module Gradebook {
             
             n: KnockoutObservable<any> = ko.observable(this.nums[0]);
             
-            students: KnockoutObservableArray<Gradebook.Model.StudentModel> = ko.observableArray([
+            students: KnockoutObservableArray<gradebook.model.StudentModel> = ko.observableArray([
                 
-                new Gradebook.Model.StudentModel("Jeff Smith")
+                new gradebook.model.StudentModel("Jeff Smith")
             
-               ,new Gradebook.Model.StudentModel("Gandalf")
+               ,new gradebook.model.StudentModel("Gandalf")
                     
             ]);
             
-            assignments: KnockoutObservableArray<Gradebook.Model.WorkModel> = ko.observableArray([
+            assignments: KnockoutObservableArray<gradebook.model.WorkModel> = ko.observableArray([
             
-                new Gradebook.Model.WorkModel("Math", this.workTypes[1])
+                new gradebook.model.WorkModel("Math", this.workTypes[1])
             
-               ,new Gradebook.Model.WorkModel("Reading", this.workTypes[2])
+               ,new gradebook.model.WorkModel("Reading", this.workTypes[2])
                    
             ]);
             
@@ -166,7 +148,7 @@ module Gradebook {
             
             addStudent = () => {
                 
-                this.students.push(new Gradebook.Model.StudentModel("Student "));
+                this.students.push(new gradebook.model.StudentModel("Student "));
                 
                 this.updateRows();
                 
@@ -184,7 +166,7 @@ module Gradebook {
                 
                 console.log('t:' + t);
                 
-                this.assignments.push(new Gradebook.Model.WorkModel("Assignment ", t));
+                this.assignments.push(new gradebook.model.WorkModel("Assignment ", t));
                 
                 this.updateRows();console.log(this.assignments()[2].workType());
                 

@@ -1,19 +1,31 @@
-module Gradebook {
+module gradebook {
 
-    export module Model {
+    export module model {
 
         export class StudentModel {
 
-
+            fullName: KnockoutObservable<string>;  
+                      
+            editing: KnockoutObservable<boolean>;
+                        
+            scores: KnockoutObservableArray<number>;
+            
+            lowest: KnockoutObservableArray<number>; 
+            
+            
             constructor(fullName: string) {
 
                 this.fullName = ko.observable(fullName);
-
+                
+                this.editing = ko.observable(false);
+                
+                this.scores = ko.observableArray<number>();
+                
+                this.lowest = ko.observableArray<number>();
+                
+                //var self: gradebook.model.StudentModel = this;            
+                
             }
-
-            fullName: KnockoutObservable<string>;
-
-            editing: KnockoutObservable<boolean> = ko.observable(false);
 
             edit(): void {
 
@@ -21,45 +33,44 @@ module Gradebook {
 
             }
 
-            scores: KnockoutObservableArray<number> = ko.observableArray<number>();
+            mean(): any {
+            
+                this.
+                
+                ko.computed(function() {
 
-            lowest: KnockoutObservableArray<number> = ko.observableArray<number>();
+                    var sum: number = 0;
 
-            mean = ko.computed(() => {
-
-                var sum: number = 0;
-
-                var count: number = 0;
-
-                var m: number = 0;
-
-                for (m; m < this.scores().length; m++) {
-
-                    var score: number = this.scores()[m];
-
-                    if (this.lowest.indexOf(score) < 0) {
-
-                        sum += score;
-
-                        count++;
-
+                    var count: number = 0;
+    
+                    var m: number = 0;
+    
+                    for (m; m < self.scores().length; m++) {
+    
+                        if (this.lowest.indexOf(self.scores()[m]) < 0) {
+    
+                            sum += self.scores()[m];
+    
+                            count++;
+    
+                        }
+    
                     }
-
-                }
-
-                if (count > 0) {
-
-                    sum = sum / count;
-
-                    return sum.toFixed(2);
-
-                } else {
-
-                    return 'N/A';
-
-                }
-
-            });
+    
+                    if (count > 0) {
+    
+                        sum = sum / count;
+    
+                        return sum.toFixed(2);
+    
+                    } else {
+    
+                        return 'N/A';
+    
+                    }
+    
+                })
+            }
 
         }
 

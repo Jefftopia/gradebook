@@ -1,6 +1,6 @@
-module Gradebook {
+module gradebook {
 
-	export module Model {
+	export module model {
 
 		export class WorkModel {
                         
