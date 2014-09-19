@@ -22,9 +22,7 @@ module gradebook {
                 this.scores = ko.observableArray<number>();
                 
                 this.lowest = ko.observableArray<number>();
-                
-                //var self: gradebook.model.StudentModel = this;            
-                
+                                
             }
 
             edit(): void {
@@ -33,11 +31,7 @@ module gradebook {
 
             }
 
-            mean(): any {
-            
-                this.
-                
-                ko.computed(function() {
+            mean: any =  ko.computed(function() {
 
                     var sum: number = 0;
 
@@ -45,11 +39,11 @@ module gradebook {
     
                     var m: number = 0;
     
-                    for (m; m < self.scores().length; m++) {
+                    for (m; m < this.scores().length; m++) {
     
-                        if (this.lowest.indexOf(self.scores()[m]) < 0) {
+                        if (this.this.indexOf(this.scores()[m]) < 0) {
     
-                            sum += self.scores()[m];
+                            sum += this.scores()[m];
     
                             count++;
     
@@ -69,11 +63,9 @@ module gradebook {
     
                     }
     
-                })
+                });
             }
 
         }
 
     }
-
-}

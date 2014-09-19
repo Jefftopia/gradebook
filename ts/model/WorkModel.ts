@@ -1,28 +1,38 @@
 module gradebook {
 
-	export module model {
+    export module model {
 
-		export class WorkModel {
-                        
-			constructor(workName: string, workType: KnockoutObservable<string>) {
-                
-				this.workName = ko.observable(workName);
-                
+        export class WorkModel {
+
+            workName: KnockoutObservable<string>;
+
+            workType: KnockoutObservable<string>;
+
+            dropped: KnockoutObservable<boolean>;
+
+            editing: KnockoutObservable<boolean>;
+
+            constructor(workName: string, workType: KnockoutObservable<string>) {
+
+                this.workName = ko.observable(workName);
+
                 this.workType = workType;
-                
-			}
-                workName: KnockoutObservable<string>;
-                
-                workType: KnockoutObservable<string>;
-            
-                dropped = ko.observable(false);
-                                
-                editing = ko.observable(false);
-                
-                edit = () => { this.editing(!this.editing()); };            
-            
-		}
-        
-	}
-    
+
+                this.dropped = ko.observable(false);
+
+                this.editing = ko.observable(false);
+
+            }
+
+
+            edit(): void {
+
+                this.editing(!this.editing());
+
+            }
+
+        }
+
+    }
+
 }
